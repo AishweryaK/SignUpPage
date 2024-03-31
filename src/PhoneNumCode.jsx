@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef} from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,17 +9,17 @@ import {
 } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
 
-const PhoneNumCode = ({changeProp, validation}) => {
+const PhoneNumCode = ({changeProp}) => {
   const [value, setValue] = useState("");
   const [formattedValue, setFormattedValue] = useState("");
-  const [valid, setValid] = useState(false);
+  // const [valid, setValid] = useState(false);
   // const [showMessage, setShowMessage] = useState(false);
   const phoneInput = useRef(null);
 
   // useEffect(() => {
   //   changeProp(value);
   // }, [value, changeProp]);
-  console.log(typeof(value) + "hjdh")
+  // console.log(typeof(value) + "hjdh")
 
   return (
     <>
@@ -56,22 +56,22 @@ const PhoneNumCode = ({changeProp, validation}) => {
             codeTextStyle={{ color: "white" }}
           />
 
-           {!phoneInput.current?.isValidNumber(value) && (
+           {/* {!phoneInput.current?.isValidNumber(value) && (
             <View >
               <Text style={styles.message}>Invalid Phone Number</Text>
             </View>
-          )}
+          )} */}
 
-         {/* <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              const checkValid = phoneInput.current?.isValidNumber(value);
-              setShowMessage(true);
-              setValid(checkValid ? checkValid : false);
-            }}
-          >
-            <Text>Check</Text>
-          </TouchableOpacity>  */}
+          {value === "" ? (
+            <View>
+              <Text style={styles.message}>Enter phone number</Text>
+            </View>
+          ) : !phoneInput.current?.isValidNumber(value) ? (
+            <View>
+              <Text style={styles.message}>Invalid Phone Number</Text>
+            </View>
+          ) : null} 
+
         </SafeAreaView>
       </View>
     </>

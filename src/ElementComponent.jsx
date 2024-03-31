@@ -1,5 +1,5 @@
 import React,{useState, useRef} from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import DatePicker from "./DatePicker";
 import PhoneNumCode from "./PhoneNumCode";
 
@@ -9,6 +9,8 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
     const [err,setError] = useState(false)
     const [focus,setFocus] =useState(false)
     const [pssErr,setPss] = useState(false)
+    const [emptyErr,setemptyError] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
     const flag = useRef(false)
     const dOB = useRef(false)
     const phNum =useRef(false)
@@ -32,15 +34,19 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
 }
 
 
-    const passShow = () => {
+    const handleFocus = () => {
         if(text=="SET PASSWORD") 
         setFocus(true)
     else 
     setFocus(false)
     }
 
-    const handleFocus = () => {
+    const handleBlur = () => {
         setFocus(false)
+    }
+
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword)
     }
 
         if(text=="PHONE NUMBER")
@@ -77,7 +83,7 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
                 {text}
             </Text>
     
-               { dOB.current ?
+               {/* { dOB.current ?
                (<DatePicker  changeProp={changeProp} />)
                : phNum.current ? 
                ( <PhoneNumCode changeProp={changeProp} validation={validation} /> )
@@ -91,7 +97,44 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
             secureTextEntry={flag.current} 
             maxLength={numLength.current}
             onBlur={handleFocus}
-            />)
+            >
+            {flag.current && 
+                (<TouchableOpacity style={styles.showOpacity} onPress= {toggleShowPassword} >
+                       <Text style={styles.showText}>
+                           {showPassword ? "Show" : "Hide"}
+                       </Text>
+                   </TouchableOpacity>
+                   </TextInput> )}
+                   )
+            
+} */}
+
+{ dOB.current ?
+           (<DatePicker  changeProp={changeProp} />)
+           : phNum.current ? 
+           ( <PhoneNumCode changeProp={changeProp} validation={validation} /> )
+           :( 
+           <TextInput 
+        style={styles.input}
+        onChangeText={onCheck}
+        placeholder= {text.toLowerCase()}
+        onFocus = {handleFocus}
+        placeholderTextColor="gray"
+        keyboardType={keyBoard.current}
+        secureTextEntry={flag.current} 
+        maxLength={numLength.current}
+        onBlur={handleBlur}
+        >
+            {/* {flag.current &&  */}
+         {/* <Button title=" aaa"  onClick= {toggleShowPassword} /> */}
+                 {/* <Text style={styles.showText}>
+            //         {showPassword ? "Show" : "Hide"}
+            //     </Text> */}
+            {/* //  </Button>  */}
+            
+        </TextInput>
+            
+         )
 }
 
             <View>
@@ -101,13 +144,6 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
                 </Text>
                 }
             </View>
-            {/* <View>
-                {numLength.current==15 &&
-                <Text style={styles.errText}>
-                    Maximum Length of characters reached.
-                </Text>
-                }
-            </View> */}
             <View>
                 {focus &&
                 <Text style={styles.passwordText}>
