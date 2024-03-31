@@ -49,7 +49,6 @@ function App() {
       }
       else
       Alert.alert("Incorrect or Partial Information", "Please fill in correct credentials");
-      Alert.alert("Incorrect or Partial Information", "Please fill in correct credentials");
     }
     else 
     Alert.alert('Error', 'Passwords NOT entered or do NOT match!');
