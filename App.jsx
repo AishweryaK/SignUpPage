@@ -33,8 +33,6 @@ function App() {
   const [password, setPassword] = useState('Not provided');
   const [passwordConfirm, setPasswordConfirm] = useState('Not provided');
 
-  const [first, setFirst] = useState('Not provided');
-
   const onSubmit = () => {
     if (password === passwordConfirm)
       {
@@ -50,6 +48,7 @@ function App() {
       );
       }
       else
+      Alert.alert("Incorrect or Partial Information", "Please fill in correct credentials");
       Alert.alert("Incorrect or Partial Information", "Please fill in correct credentials");
     }
     else 
