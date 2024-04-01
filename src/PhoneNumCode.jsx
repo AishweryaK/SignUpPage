@@ -12,6 +12,7 @@ import PhoneInput from "react-native-phone-number-input";
 const PhoneNumCode = ({changeProp}) => {
   const [value, setValue] = useState("");
   const [formattedValue, setFormattedValue] = useState("");
+  const pressed= useRef(false)
   // const [valid, setValid] = useState(false);
   // const [showMessage, setShowMessage] = useState(false);
   const phoneInput = useRef(null);
@@ -37,7 +38,7 @@ const PhoneNumCode = ({changeProp}) => {
             layout="first"
             onChangeText={(text) => {
               setValue(text);
-              
+              pressed.current=true;
             }}
             onChangeFormattedText={(text) => {
               setFormattedValue(text);
@@ -62,16 +63,17 @@ const PhoneNumCode = ({changeProp}) => {
             </View>
           )} */}
 
-          {value === "" ? (
-            <View>
+          {value === "" ?
+          pressed.current? 
+          (  <View>
               <Text style={styles.message}>Enter phone number</Text>
             </View>
-          ) : !phoneInput.current?.isValidNumber(value) ? (
+          ) : null
+           : !phoneInput.current?.isValidNumber(value) ? (
             <View>
               <Text style={styles.message}>Invalid Phone Number</Text>
             </View>
           ) : null} 
-
         </SafeAreaView>
       </View>
     </>
@@ -95,9 +97,9 @@ const styles = StyleSheet.create({
   //   fontSize: 10,
   //   borderRadius: 20,
   // },
-  redColor: {
-    backgroundColor: '#323139'
-  },
+  // redColor: {
+  //   backgroundColor: '#323139'
+  // },
   message: {
     color: "red",
     fontSize: 15,

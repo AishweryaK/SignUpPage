@@ -9,9 +9,9 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
     const [err,setError] = useState(false)
     const [focus,setFocus] =useState(false)
     const [pssErr,setPss] = useState(false)
-    const [emptyErr,setemptyError] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const flag = useRef(false)
+    const emptyErr=useRef(false)   
     const dOB = useRef(false)
     const phNum =useRef(false)
     const keyBoard= useRef("default")
@@ -19,6 +19,12 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
 
 
     const onCheck = (input) => {
+        if(input=="")
+        {
+            emptyErr.current=true;
+        }
+        else emptyErr.current=false;
+
         if(text=="CONFIRM PASSWORD" && input!=isConfirmPassword){
             setPss(true)
         }
@@ -156,6 +162,13 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
                 {pssErr &&
                 <Text style={styles.errText}>
                     Password not equal.
+                </Text>
+                }
+            </View>
+            <View>
+                {emptyErr.current &&
+                <Text style={styles.errText}>
+                    Enter your {text.toLowerCase()}
                 </Text>
                 }
             </View>
