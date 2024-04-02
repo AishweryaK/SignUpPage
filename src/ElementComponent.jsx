@@ -1,5 +1,5 @@
 import React,{useState, useRef} from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from "react-native";
 import DatePicker from "./DatePicker";
 import PhoneNumCode from "./PhoneNumCode";
 
@@ -19,6 +19,7 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
 
 
     const onCheck = (input) => {
+        // console.log(input,'input');
         if(input=="")
         {
             emptyErr.current=true;
@@ -72,6 +73,7 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
 
     if(text=="SET PASSWORD" || text=="CONFIRM PASSWORD")
     {
+        // console.log(text,'HERE');
         flag.current=true;
     }
     else if(text=="DATE OF BIRTH")
@@ -88,38 +90,31 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
             <Text style={styles.text}>
                 {text}
             </Text>
-    
-               {/* { dOB.current ?
-               (<DatePicker  changeProp={changeProp} />)
-               : phNum.current ? 
-               ( <PhoneNumCode changeProp={changeProp} validation={validation} /> )
-               :(<TextInput 
-            style={styles.input}
-            onChangeText={onCheck}
-            placeholder= {text.toLowerCase()}
-            onFocus = {passShow}
-            placeholderTextColor="gray"
-            keyboardType={keyBoard.current}
-            secureTextEntry={flag.current} 
-            maxLength={numLength.current}
-            onBlur={handleFocus}
-            >
-            {flag.current && 
-                (<TouchableOpacity style={styles.showOpacity} onPress= {toggleShowPassword} >
-                       <Text style={styles.showText}>
-                           {showPassword ? "Show" : "Hide"}
-                       </Text>
-                   </TouchableOpacity>
-                   </TextInput> )}
-                   )
-            
-} */}
+
 
 { dOB.current ?
            (<DatePicker  changeProp={changeProp} />)
            : phNum.current ? 
            ( <PhoneNumCode changeProp={changeProp} validation={validation} /> )
-           :( 
+           : flag.current ?
+           ( <View style={styles.input}>
+            <TextInput 
+            style={styles.inputPassword}
+        onChangeText={onCheck}
+        placeholder= {text.toLowerCase()}
+        onFocus = {handleFocus}
+        placeholderTextColor={"gray"}
+        keyboardType={keyBoard.current}
+        secureTextEntry={!showPassword} 
+        onBlur={handleBlur} />
+        <TouchableOpacity style={styles.showOpacity} onPress= {toggleShowPassword} >
+                       <Text style={styles.showText}>
+                           {showPassword ? "Hide" : "Show"}
+                       </Text>
+                   </TouchableOpacity> 
+            </View>
+           )
+          : ( 
            <TextInput 
         style={styles.input}
         onChangeText={onCheck}
@@ -127,19 +122,10 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
         onFocus = {handleFocus}
         placeholderTextColor="gray"
         keyboardType={keyBoard.current}
-        secureTextEntry={flag.current} 
         maxLength={numLength.current}
         onBlur={handleBlur}
         >
-            {/* {flag.current &&  */}
-         {/* <Button title=" aaa"  onClick= {toggleShowPassword} /> */}
-                 {/* <Text style={styles.showText}>
-            //         {showPassword ? "Show" : "Hide"}
-            //     </Text> */}
-            {/* //  </Button>  */}
-            
-        </TextInput>
-            
+            </TextInput>
          )
 }
 
@@ -150,14 +136,7 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
                 </Text>
                 }
             </View>
-            <View>
-                {focus &&
-                <Text style={styles.passwordText}>
-                    Password should be atleast 8 characters long 
-                    consisting of one or more uppercase, numbers and special characters.
-                </Text>
-                }
-            </View>
+            
             <View>
                 {pssErr &&
                 <Text style={styles.errText}>
@@ -168,7 +147,15 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
             <View>
                 {emptyErr.current &&
                 <Text style={styles.errText}>
-                    Enter your {text.toLowerCase()}
+                    Enter {text.toLowerCase()}
+                </Text>
+                }
+            </View>
+            <View>
+                {focus &&
+                <Text style={styles.passwordText}>
+                    Password should be atleast 8 characters long 
+                    consisting of one or more uppercase, numbers and special characters.
                 </Text>
                 }
             </View>
@@ -186,14 +173,17 @@ const styles= StyleSheet.create(
             fontWeight:"bold"
         },
         input: {
+            display: "flex",
+            flexDirection: "row",
             height: 40,
             borderWidth: 1,
             borderColor: "gray",
             borderRadius: 20,
-            padding:10,
+            // padding:10,
             paddingHorizontal:15,
             marginHorizontal : 40,
             color:"white",
+            justifyContent: "space-between",
         },
         errText: {
             color: "red",
@@ -206,6 +196,26 @@ const styles= StyleSheet.create(
             fontSize: 15,
             paddingLeft: 45,
             paddingRight: 45,
+        },
+        showOpacity: {
+            padding: 5,
+            paddingVertical:7,
+            // marginRight:5
+        },
+        showText : {
+            color:"white",
+            fontSize:16,
+            textDecorationLine:"underline"
+        },
+        inputPassword : {
+            color:"white",
+            // width: 260,
+            // fontSize:20,
+            // borderWidth:2,
+            flex:1,
+            // paddingLeft:15,
+
+
         }
     }
 )
