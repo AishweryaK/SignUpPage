@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
-  View,
 } from 'react-native';
 
 import ForeGround from './ForeGround';
@@ -61,19 +60,19 @@ function SignUpMain() {
         <ProfileImage />
         <ForeGround />
 
-        <ElementComponent text="FIRST NAME" changeProp={setFirstName} validation= {validName} type={INPUT_TYPE.FIRST} />
+        <ElementComponent text={INPUT_TYPE.FIRST} changeProp={setFirstName} validation= {validName} type={INPUT_TYPE.FIRST} />
 
-        <ElementComponent text="LAST NAME" changeProp={setLastName} validation= {validName} />
+        <ElementComponent text={INPUT_TYPE.LAST} changeProp={setLastName} validation= {validName} />
 
-        <ElementComponent text="EMAIL ADDRESS" changeProp={setEmail} validation= {validEmail} />
+        <ElementComponent text={INPUT_TYPE.EMAIL} changeProp={setEmail} validation= {validEmail} />
 
-        <ElementComponent text="DATE OF BIRTH" changeProp={setDob}  validation={validName}/>
+        <ElementComponent text={INPUT_TYPE.DOB} changeProp={setDob}  validation={validName}/>
 
-        <ElementComponent text="PHONE NUMBER" changeProp={setPhoneNo} validation= {validPhoneNumber} />
+        <ElementComponent text={INPUT_TYPE.PHONE} changeProp={setPhoneNo} validation= {validPhoneNumber} />
 
-        <ElementComponent text="SET PASSWORD" changeProp={setPassword} validation= {validPassword} />
+        <ElementComponent text={INPUT_TYPE.PASSWORD} changeProp={setPassword} validation= {validPassword} />
 
-        <ElementComponent text="CONFIRM PASSWORD" changeProp={setPasswordConfirm} validation= {null} isConfirmPassword={password} />
+        <ElementComponent text={INPUT_TYPE.CONFIRM} changeProp={setPasswordConfirm} validation= {null} isConfirmPassword={password} />
 
         <TouchableOpacity style={styles.button} onPress={onSubmit}>
           <Text style={styles.text}>Sign Up</Text>

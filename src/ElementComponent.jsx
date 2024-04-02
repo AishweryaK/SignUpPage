@@ -1,7 +1,8 @@
 import React,{useState, useRef} from "react";
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
 import DatePicker from "./DatePicker";
 import PhoneNumCode from "./PhoneNumCode";
+import { INPUT_TYPE } from "./utils/constants";
 
 
 
@@ -26,12 +27,12 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
         }
         else emptyErr.current=false;
 
-        if(text=="CONFIRM PASSWORD" && input!=isConfirmPassword){
+        if(text==INPUT_TYPE.CONFIRM && input!=isConfirmPassword){
             setPss(true)
         }
         else setPss(false)
 
-        if(text!="CONFIRM PASSWORD" && !validation(input) && input!="" )
+        if(text!=INPUT_TYPE.CONFIRM && !validation(input) && input!="" )
         {
             setError(true)
         }
@@ -42,7 +43,7 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
 
 
     const handleFocus = () => {
-        if(text=="SET PASSWORD") 
+        if(text==INPUT_TYPE.PASSWORD) 
         setFocus(true)
     else 
     setFocus(false)
@@ -56,31 +57,31 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
         setShowPassword(!showPassword)
     }
 
-        if(text=="PHONE NUMBER")
+        if(text==INPUT_TYPE.PHONE)
         {
             numLength.current=10;
             keyBoard.current="number-pad"
         }
-       else if(text=="FIRST NAME")
+       else if(text==INPUT_TYPE.FIRST)
         {
             numLength.current=15;
         }
-        else if(text=="LAST NAME")
+        else if(text==INPUT_TYPE.LAST)
         {
             numLength.current=15;
         }
 
 
-    if(text=="SET PASSWORD" || text=="CONFIRM PASSWORD")
+    if(text==INPUT_TYPE.PASSWORD || text==INPUT_TYPE.CONFIRM)
     {
         // console.log(text,'HERE');
         flag.current=true;
     }
-    else if(text=="DATE OF BIRTH")
+    else if(text==INPUT_TYPE.DOB)
     {
         dOB.current =true;
     }
-    else if(text=="PHONE NUMBER")
+    else if(text==INPUT_TYPE.PHONE)
     {
         phNum.current=true;
     }
