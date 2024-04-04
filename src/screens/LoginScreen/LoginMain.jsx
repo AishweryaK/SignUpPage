@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import { Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
+import { View , Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
 import { NAVIGATION } from "../../utils/constants";
 import { DataContext } from "../../context";
 
@@ -8,29 +8,73 @@ function LoginMain ({navigation}) {
     const data = useContext(DataContext)
     const [email, setEmail]=useState("");
     const [pass,setPass]=useState("");
+    const [emailErr,setEmailErr]=useState(false);
+    // const [emptyErr, setEmptyErr]=useState(false);
+    
 
 //    console.log(email, pass, data)
+
+// const validEmail = () =>  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)
+
+// if(!(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)) && email!="")
+// {
+//   setEmailErr(true);
+// }
+// else setEmailErr(false);
+
+const [emailError, setEmailError] = useState(false);
+    const [passError, setPassError] = useState(false);
+
+    const validateEmail = () => {
+        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email) && email !== "") {
+            setEmailError(true);
+        } else {
+            setEmailError(false);
+        }
+    };
+
+    const validatePassword = () => {
+        if (pass === "") {
+            setPassError(true);
+        } else {
+            setPassError(false);
+        }
+    };
+
+    const handleLogin = () => {
+        validateEmail();
+        validatePassword();
+       
+    };
+
     
 
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-             <TextInput 
+        <TextInput 
         style={styles.input}
         onChangeText={(text)=>setEmail(text)}
         placeholder= "Enter Email"
         placeholderTextColor="gray"
-        keyboardType={"default"}
+        keyboardType="email-address"
         >
-            </TextInput>
-            <TextInput 
+          <View>
+                {err &&
+               <Text style={styles.errText}>
+                    Email entered incorrectly.
+                </Text>
+                }
+            </View>
+        </TextInput>
+        <TextInput 
         style={styles.input}
         onChangeText={(text)=>setPass(text)}
         placeholder= "Enter Password"
         placeholderTextColor="gray"
         keyboardType={"default"}
         >
-            </TextInput>
+        </TextInput>
 
         <TouchableOpacity 
         onPress={()=> navigation.navigate(NAVIGATION.SIGNUP)}>
@@ -94,7 +138,13 @@ const styles=StyleSheet.create({
       touchable:{
         alignContent:"center",
         marginTop:"20"
-      }
+      },
+      errText: {
+        color: "red",
+        fontSize: 15,
+        paddingLeft: 45,
+
+    },
 }
 )
 
