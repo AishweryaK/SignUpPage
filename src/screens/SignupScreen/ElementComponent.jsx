@@ -1,8 +1,9 @@
 import React,{useState, useRef} from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
-import DatePicker from "./DatePicker";
-import PhoneNumCode from "./PhoneNumCode";
-import { INPUT_TYPE } from "./utils/constants";
+import DatePicker from "../../DatePicker";
+import PhoneNumCode from "../../PhoneNumCode";
+import { INPUT_TYPE } from "../../utils/constants";
+import { DataContext } from "../../context";
 
 
 

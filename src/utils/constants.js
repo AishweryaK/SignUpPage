@@ -8,3 +8,9 @@ export const INPUT_TYPE={
     CONFIRM:"CONFIRM PASSWORD"
 
   }
+
+  export const NAVIGATION={
+    LOGIN_HOME:"LoginMain",
+    SIGNUP:"SignUpMain",
+    WELCOME:"WelcomeMain",
+  }

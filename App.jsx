@@ -1,23 +1,28 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import {
   SafeAreaView,
   StyleSheet,
-  Alert,
-  TouchableOpacity,
-  Text,
   ScrollView,
 } from 'react-native';
-import SignUpMain from './src/SignUpMain';
+// import SignUpMain from './src/screens/SignupScreen/SignUpMain';
+import { NavigationContainer } from '@react-navigation/native';
+import StackNavigation from './src/navigation';
+import { DataProvider } from './src/context';
 
 
 function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <SignUpMain/>
-      </ScrollView>
+      <DataProvider>
+      <NavigationContainer>
+     
+        {/* <SignUpMain/> */}
+        <StackNavigation />
+     
+      </NavigationContainer>
+      </DataProvider>
     </SafeAreaView>
   );
 }
