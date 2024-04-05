@@ -10,7 +10,7 @@ export const INPUT_TYPE={
   }
 
   export const NAVIGATION={
-    LOGIN_HOME:"LoginMain",
-    SIGNUP:"SignUpMain",
-    WELCOME:"WelcomeMain",
+    LOGIN_HOME:"Login",
+    SIGNUP:"Sign Up",
+    WELCOME:"Welcome",
   }

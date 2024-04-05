@@ -51,10 +51,11 @@ const PhoneNumCode = ({changeProp}) => {
             textContainerStyle={styles.bigContainer}
             withDarkTheme
             withShadow
-            autoFocus
+            autoFocus={false}
             textColor={{ color: "white" }} 
             placeholderTextColor={{ color: "white" }}
             codeTextStyle={{ color: "white" }}
+            textInputStyle={{ color: "white" }}
           />
 
            {/* {!phoneInput.current?.isValidNumber(value) && (

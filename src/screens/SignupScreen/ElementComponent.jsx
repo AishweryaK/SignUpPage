@@ -37,7 +37,10 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
         {
             setError(true)
         }
-        else
+        else if(text==INPUT_TYPE.EMAIL)
+       { changeProp(input.toLowerCase());
+         setError(false);} 
+         else 
        { changeProp(input);
          setError(false);} 
 }
@@ -126,8 +129,8 @@ function ElementComponent ({text, changeProp, validation, isConfirmPassword}) {
         keyboardType={keyBoard.current}
         maxLength={numLength.current}
         onBlur={handleBlur}
-        >
-            </TextInput>
+        // autoCapitalize="none"
+        />
          )
 }
 
@@ -186,6 +189,7 @@ const styles= StyleSheet.create(
             marginHorizontal : 40,
             color:"white",
             justifyContent: "space-between",
+            // selectionColor:"white"
         },
         errText: {
             color: "red",

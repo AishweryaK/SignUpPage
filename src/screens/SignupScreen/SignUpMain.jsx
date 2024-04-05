@@ -19,6 +19,7 @@ import { DataContext } from '../../context';
 
 function SignUpMain({navigation}) {
   const data=useContext(DataContext)
+  // const {userData, setUserData}=useContext(DataContext)
 // console.log(data)
   const validName = (input ) => /^[A-Za-z]+$/gi.test(input)
   const validPhoneNumber = (input ) =>  /^\d{10}$/.test(input)
@@ -33,32 +34,26 @@ function SignUpMain({navigation}) {
   const [password, setPassword] = useState('Not provided');
   const [passwordConfirm, setPasswordConfirm] = useState('Not provided');
 
-  const onSubmit = () => {
+  const onSubmit =  () => {
     if (password === passwordConfirm)
       {
         if(firstName!='Not provided' && lastName!='Not provided' && email!='Not provided' 
         && dob!='Not provided' && phoneNo!='Not provided' && phoneNo!="")
       {
-      //   Alert.alert(
-      //   'Data Entered By User ',
-      //   `FIRST NAME = ${firstName}
-      // LAST NAME = ${lastName}
-      // EMAIL ADDRESS = ${email}
-      // DATE OF BIRTH = ${dob}
-      // PHONE NUMBER = ${phoneNo}`,
-      // );
-      data.setUserData({
-        ...data,
-        first: firstName,
-        last: lastName,
-        email: email,
-        dob: dob,
-        phoneNum: phoneNo,
-        password:password,
-      });
-      console.log(data)
+      data.setUserData([
+        ...data.userData,
+        {
+           first: firstName,
+           last: lastName,
+           email: email,
+           dob: dob,
+           phoneNum: phoneNo,
+           password: password,
+        },
+     ]);
+      // console.log(data)
 
-      navigation.navigate(NAVIGATION.LOGIN_HOME)
+        navigation.navigate(NAVIGATION.LOGIN_HOME)  
 
       }
       else
@@ -66,7 +61,26 @@ function SignUpMain({navigation}) {
     }
     else 
     Alert.alert('Error', 'Passwords NOT entered or do NOT match!');
-  }
+  } 
+
+  // const onSubmit = async () => {
+  //   try{
+  //     data.setUserData([
+  //       ...data.userData,
+  //       {
+  //          first: firstName,
+  //          last: lastName,
+  //          email: email,
+  //          dob: dob,
+  //          phoneNum: phoneNo,
+  //          password: password,
+  //       },
+  //    ]);
+  //     navigation.navigate(NAVIGATION.LOGIN_HOME); }
+  //     catch(err)
+  //     {console.log("There occured an error")}
+    
+  // }
 
   return (
     <SafeAreaView style={signUpStyles.container}>
@@ -74,7 +88,9 @@ function SignUpMain({navigation}) {
         <ProfileImage />
         <ForeGround />
 
-        <ElementComponent text={INPUT_TYPE.FIRST} changeProp={setFirstName} validation= {validName} type={INPUT_TYPE.FIRST} />
+        <ElementComponent text={INPUT_TYPE.FIRST} changeProp={setFirstName} validation= {validName} type={INPUT_TYPE.FIRST} >
+          
+        </ElementComponent>
 
         <ElementComponent text={INPUT_TYPE.LAST} changeProp={setLastName} validation= {validName} />
 
@@ -98,3 +114,23 @@ function SignUpMain({navigation}) {
 
 
 export default SignUpMain;
+
+
+
+
+//   Alert.alert(
+      //   'Data Entered By User ',
+      //   `FIRST NAME = ${firstName}
+      // LAST NAME = ${lastName}
+      // EMAIL ADDRESS = ${email}
+      // DATE OF BIRTH = ${dob}
+      // PHONE NUMBER = ${phoneNo}`,
+      // );
+      // await data.setUserData({
+      //   first: firstName,
+      //   last: lastName,
+      //   email: email,
+      //   dob: dob,
+      //   phoneNum: phoneNo,
+      //   password:password,
+      // });

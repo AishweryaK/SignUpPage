@@ -8,10 +8,10 @@ import { NAVIGATION } from "../utils/constants";
 const Stack = createNativeStackNavigator();
 function StackNavigation () {
     return (
-        <Stack.Navigator initialRouteName={NAVIGATION.SIGNUP}>
+        <Stack.Navigator initialRouteName={NAVIGATION.LOGIN_HOME} >
             <Stack.Screen name={NAVIGATION.LOGIN_HOME} component={LoginMain} />
             <Stack.Screen name={NAVIGATION.SIGNUP} component={SignUpMain} />
-            {/* <Stack.Screen name={NAVIGATION.WELCOME} component={WelcomeMain} /> */}
+            <Stack.Screen name={NAVIGATION.WELCOME} component={WelcomeMain} />
 
         </Stack.Navigator>
     )

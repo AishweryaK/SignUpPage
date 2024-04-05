@@ -1,5 +1,5 @@
-import React, {useContext, useState} from "react";
-import { View , Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
+import React, {useContext, useState, useRef} from "react";
+import { View , Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, Alert } from "react-native";
 import { NAVIGATION } from "../../utils/constants";
 import { DataContext } from "../../context";
 
@@ -8,65 +8,67 @@ function LoginMain ({navigation}) {
     const data = useContext(DataContext)
     const [email, setEmail]=useState("");
     const [pass,setPass]=useState("");
-    const [emailErr,setEmailErr]=useState(false);
-    // const [emptyErr, setEmptyErr]=useState(false);
-    
-
-//    console.log(email, pass, data)
-
-// const validEmail = () =>  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)
-
-// if(!(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)) && email!="")
-// {
-//   setEmailErr(true);
-// }
-// else setEmailErr(false);
-
-const [emailError, setEmailError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
     const [passError, setPassError] = useState(false);
+    const errFlag = useRef(false)
 
-    const validateEmail = () => {
-        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email) && email !== "") {
-            setEmailError(true);
-        } else {
-            setEmailError(false);
+    console.log(data,'data');
+   
+
+    const handleEmail = (input) =>
+     { if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(input) && input !== "") {
+        setEmailError(true);
+    } else {
+      setEmail(input.toLowerCase());
+        setEmailError(false);
+    }
+    }
+
+    const letEmail = data.userData.findIndex(obj=>obj.email==email)
+    console.log(email,'email');
+    console.log(pass,'password');
+    console.log(letEmail, "letemail")
+    const handleLogin= () => {
+      if(letEmail>=0 && data.userData[letEmail].password==pass)
+        {
+          navigation.navigate(NAVIGATION.WELCOME, {index: letEmail});
+          
         }
-    };
-
-    const validatePassword = () => {
-        if (pass === "") {
-            setPassError(true);
-        } else {
-            setPassError(false);
+        else {
+          Alert.alert("Invalid Credentials", "Please Sign up")
         }
-    };
-
-    const handleLogin = () => {
-        validateEmail();
-        validatePassword();
-       
-    };
+  }
 
     
 
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
+            <View styles={styles.view}>
+            <Text style={styles.text}>
+                EMAIL ADDRESS
+            </Text>
+            </View>
         <TextInput 
         style={styles.input}
-        onChangeText={(text)=>setEmail(text)}
+        onChangeText={handleEmail}
         placeholder= "Enter Email"
         placeholderTextColor="gray"
         keyboardType="email-address"
-        >
+       />
           <View>
-                {err &&
+                {emailError &&
                <Text style={styles.errText}>
                     Email entered incorrectly.
                 </Text>
                 }
             </View>
-        </TextInput>
+
+            <View styles={styles.view}>
+            <Text style={styles.text}>
+                PASSWORD
+            </Text>
+            </View>
         <TextInput 
         style={styles.input}
         onChangeText={(text)=>setPass(text)}
@@ -75,14 +77,13 @@ const [emailError, setEmailError] = useState(false);
         keyboardType={"default"}
         >
         </TextInput>
-
-        <TouchableOpacity 
+        {/* <TouchableOpacity 
         onPress={()=> navigation.navigate(NAVIGATION.SIGNUP)}>
           <Text  style={styles.button}> Navigate to SignUp </Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        onPress={()=> navigation.navigate(NAVIGATION.LOGIN_HOME)}>
-          <Text  style={styles.button}> Navigate to login</Text>
+        </TouchableOpacity> */}
+        <TouchableOpacity style={styles.button}
+        onPress={handleLogin}>
+          <Text  style={{textAlign:"center", color:"white"}}> Welcome</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.touchable}
         onPress={()=> navigation.navigate(NAVIGATION.SIGNUP)}>
@@ -97,7 +98,7 @@ const styles=StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#323139',
-        marginBottom: 35,
+        // marginBottom: 35,
         justifyContent:"center",
         // alignItems:"center"
       },
@@ -111,7 +112,7 @@ const styles=StyleSheet.create({
         // padding:10,
         paddingHorizontal:15,
         marginHorizontal : 40,
-        marginTop:20,
+        marginTop:10,
         color:"white",
     },
     button: {
@@ -124,10 +125,13 @@ const styles=StyleSheet.create({
         marginHorizontal: 40,
         backgroundColor: '#36A472',
         marginTop: 25,
+        marginBottom:25,
       },
       text: {
         color: 'white',
-        textAlign: 'center',
+        // textAlign: 'center',
+        marginTop:20,
+        paddingLeft:50
       },
       signup:{
         textDecorationLine:"underline",
@@ -137,7 +141,7 @@ const styles=StyleSheet.create({
       },
       touchable:{
         alignContent:"center",
-        marginTop:"20"
+        paddingHorizontal:110
       },
       errText: {
         color: "red",
@@ -145,6 +149,9 @@ const styles=StyleSheet.create({
         paddingLeft: 45,
 
     },
+    view:{
+      padingTop:10
+    }
 }
 )
 

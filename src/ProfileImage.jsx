@@ -110,7 +110,7 @@ function ProfileImage() {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    paddingTop: 35,
+    paddingTop: 20,
   },
   img: {
     height: 100,
