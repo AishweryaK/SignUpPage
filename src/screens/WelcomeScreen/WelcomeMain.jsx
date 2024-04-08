@@ -7,8 +7,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function WelcomeMain ({route, navigation}) {
 
-    const {userData, setUserData}= useContext(DataContext);
-    const {index, allData} = route.params;
+    // const {userData, setUserData}= useContext(DataContext);
+    const {currentUser} = route.params;
     // console.log(index)
 
     const handleLogout = () => {
@@ -29,26 +29,26 @@ function WelcomeMain ({route, navigation}) {
         <Text style={styles.text}>
         <Text style={styles.field}>NAME</Text>
             {/* : {userData[index].first} {userData[index].last} */}
-            : {allData[index].first} {allData[index].last}
+            : {currentUser.first} {currentUser.last}
         </Text>
 
         <Text style={styles.text}>
         <Text style={styles.field}>DATE OF BIRTH</Text>
             {/* : {userData[index].dob} */}
-            : {allData[index].dob}
+            : {currentUser.dob}
         </Text>
 
         <Text style={styles.text}>
           <Text style={styles.field}>EMAIL ADDRESS</Text>
            {/* : {userData[index].email} */}
-           : {allData[index].email}
+           : {currentUser.email}
         </Text>
 
 
         <Text style={styles.text}>
         <Text style={styles.field}>PHONE NUMBER</Text>
             {/* : {userData[index].phoneNum} */}
-            : {allData[index].phoneNum}
+            : {currentUser.phoneNum}
         </Text>
 
         <TouchableOpacity style={styles.button}
@@ -59,6 +59,7 @@ function WelcomeMain ({route, navigation}) {
         </ScrollView>
         </SafeAreaView>
     )
+    
        
 }
 

@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 function LoginMain ({navigation, route}) {
-    const data = useContext(DataContext)
+    // const data = useContext(DataContext)
     const [email, setEmail]=useState("");
     const [pass,setPass]=useState("");
     const [emailError, setEmailError] = useState(false);
@@ -15,27 +15,24 @@ function LoginMain ({navigation, route}) {
     // const [passError, setPassError] = useState(false);
     // const errFlag = useRef(false)
 
-    useEffect(() => 
-    {
-      getAllUsersData();
-    }, [])
+    // useEffect(() => 
+    // {
+    //   getAllUsersData();
+    // }, [])
 
     // console.log(data,'data');
     
-    const getAllUsersData =  async () => {
-      try{
-        const userDataString = await AsyncStorage.getItem('userData');
-        const userDataAsync = JSON.parse(userDataString);
-        setDataInAsync(userDataAsync);
-          // console.log(userDataString, "userData in async");
-          // console.log(userDataAsync, "userDataAsync in async");
-          return dataInAsync;
-      }
-      catch(error)
-      {console.log(error);
-      }
-    }
-
+    // const getAllUsersData =  async () => {
+    //   try{
+    //     const userDataString = await AsyncStorage.getItem('userData');
+    //     const userDataAsync = JSON.parse(userDataString);
+    //     setDataInAsync(userDataAsync);
+    //       return dataInAsync;
+    //   }
+    //   catch(error)
+    //   {console.log(error);
+    //   }
+    // }
 
     const handleForgotP = () => {
       navigation.navigate(NAVIGATION.FORGOTP)
@@ -89,34 +86,59 @@ function LoginMain ({navigation, route}) {
   //---------------------------------------------------------------------------------------
 
   
-  const handleLogin= () => {
-      console.log(dataInAsync, "bhai")
-      let letEmail = -1;
-      // dataInAsync.findIndex(obj=>obj.email==email)
-      if(dataInAsync==null)
-      {
-        letEmail=-1;
-      }
-      else
-      {
-        // data.userData = dataInAsync;
-        letEmail=dataInAsync.findIndex(obj=>obj.email==email);
-        // letEmail=data.userData.findIndex(obj=>obj.email==email);
-      }
-        console.log(email,'email');
-        console.log(pass,'password');
-        console.log(letEmail, "letemail");
-      if(letEmail>=0 && dataInAsync[letEmail].password==pass)
-        {
-          setEmail("");
-          setPass("");
-          navigation.navigate(NAVIGATION.WELCOME, {index: letEmail, allData: dataInAsync});
+  // const handleLogin= () => {
+      // // console.log(dataInAsync, "bhai")
+      // let letEmail = -1;
+      // // dataInAsync.findIndex(obj=>obj.email==email)
+      // if(dataInAsync==null)
+      // {
+      //   letEmail=-1;
+      // }
+      // else
+      // {
+      //   // data.userData = dataInAsync;
+      //   letEmail=dataInAsync.findIndex(obj=>obj.email==email);
+      //   // letEmail=data.userData.findIndex(obj=>obj.email==email);
+      // }
+      //   console.log(email,'email');
+      //   console.log(pass,'password');
+      //   console.log(letEmail, "letemail");
+      // if(letEmail>=0 && dataInAsync[letEmail].password==pass)
+      //   {
+      //     setEmail("");
+      //     setPass("");
+      //     navigation.navigate(NAVIGATION.WELCOME, {index: letEmail, allData: dataInAsync});
 
           
-        }
-        else {
-          Alert.alert("Invalid Credentials", "Please Sign up")
-        }
+      //   }
+      //   else {
+      //     Alert.alert("Invalid Credentials", "Please Sign up")
+      //   }
+      
+
+  // }
+
+
+  const handleLogin =  async () => {
+    const userInfoString = await AsyncStorage.getItem("userInfo");
+    const userInfoParsed = JSON.parse(userInfoString);
+    const currentUser = userInfoParsed.find(user=> user.email===email);
+    console.log(currentUser, "MYBOI");
+    if(!currentUser)
+    {
+      Alert.alert("Invalid Credentials", "Please Sign Up");
+      navigation.navigate(NAVIGATION.SIGNUP);
+    }
+    if(currentUser && currentUser.password===pass)
+    {
+      setEmail("");
+      setPass("");
+    navigation.navigate(NAVIGATION.WELCOME, {currentUser : currentUser });
+    }
+    else
+    {
+      Alert.alert("Invalid Credentials", "Password does not match")
+    }
   }
 
     

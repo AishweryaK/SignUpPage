@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 function SignUpMain({navigation}) {
-  const data=useContext(DataContext)
+  // const data=useContext(DataContext)
   // const {userData, setUserData}=useContext(DataContext)
 // console.log(data)
   const validName = (input ) => /^[A-Za-z]+$/gi.test(input)
@@ -34,11 +34,6 @@ function SignUpMain({navigation}) {
   const [phoneNo, setPhoneNo] = useState('Not provided');
   const [password, setPassword] = useState('Not provided');
   const [passwordConfirm, setPasswordConfirm] = useState('Not provided');
-  // const value = useRef({});
-  const [value, setValue]=useState({});
-
-  // const value ={};
-
 
   const onSubmit =  () => {
     if (password === passwordConfirm)
@@ -59,19 +54,29 @@ function SignUpMain({navigation}) {
     //     },
     //  ]);
 
-    setAllUsersData([
-      ...data.userData,
-      {
-         first: firstName,
-         last: lastName,
-         email: email,
-         dob: dob,
-         phoneNum: phoneNo,
-         password: password,
-      },
-   ]);
+  //   setAllUsersData([
+  //     ...data.userData,
+  //     {
+  //        first: firstName,
+  //        last: lastName,
+  //        email: email,
+  //        dob: dob,
+  //        phoneNum: phoneNo,
+  //        password: password,
+  //     },
+  //  ]);
+  const userInfo = {
+           first: firstName,
+           last: lastName,
+           email: email,
+           dob: dob,
+           phoneNum: phoneNo,
+           password: password,
 
-     navigation.navigate(NAVIGATION.LOGIN_HOME)  
+  }
+  setAllUsersData(userInfo);
+
+     navigation.navigate(NAVIGATION.LOGIN_HOME) ; 
 
       }
       else
@@ -82,9 +87,14 @@ function SignUpMain({navigation}) {
   } 
 
 
-  const setAllUsersData = async (userData) => {
+  const setAllUsersData = async (userInfo) => {
     try {
-      await AsyncStorage.setItem("userData", JSON.stringify(userData));
+      console.log(userInfo,"STRING");
+      const userInfoString = await AsyncStorage.getItem("userInfo");
+      console.log(userInfoString,"STRING@@@@");
+      const userInfoParsed = userInfoString ? JSON.parse(userInfoString) : [];
+      userInfoParsed.push(userInfo);
+      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfoParsed));
     }
     catch(error)
     {
