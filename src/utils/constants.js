@@ -13,4 +13,11 @@ export const INPUT_TYPE={
     LOGIN_HOME:"Login",
     SIGNUP:"Sign Up",
     WELCOME:"Welcome",
+    FORGOTP:"Forgot Password"
+  }
+
+  export const FORGOT_TYPE={
+    EMAIL:"EMAIL ADDRESS",
+    SET:"SET PASSWORD",
+    CONFIRM:"CONFIRM PASSWORD",
   }

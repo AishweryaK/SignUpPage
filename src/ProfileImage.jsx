@@ -31,7 +31,7 @@
 // export default ProfileImage;
 
 import React, { useState } from "react";
-import { StyleSheet, View, Image, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity, Text, Platform } from "react-native";
 import  {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 function ProfileImage() {
@@ -98,11 +98,13 @@ function ProfileImage() {
                 Set Image From Gallery
             </Text>
       </TouchableOpacity>
+      { Platform.OS!="ios" &&
       <TouchableOpacity onPress={handleCameraLaunch}>
             <Text style={styles.text}>
                 Upload From Camera
             </Text>
       </TouchableOpacity>
+}
     </View>
   );
 }

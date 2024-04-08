@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 
 import {
   SafeAreaView,
@@ -14,6 +14,7 @@ import ElementComponent from './ElementComponent';
 import { INPUT_TYPE , NAVIGATION} from '../../utils/constants';
 import { signUpStyles } from './styles';
 import { DataContext } from '../../context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -33,6 +34,11 @@ function SignUpMain({navigation}) {
   const [phoneNo, setPhoneNo] = useState('Not provided');
   const [password, setPassword] = useState('Not provided');
   const [passwordConfirm, setPasswordConfirm] = useState('Not provided');
+  // const value = useRef({});
+  const [value, setValue]=useState({});
+
+  // const value ={};
+
 
   const onSubmit =  () => {
     if (password === passwordConfirm)
@@ -40,20 +46,32 @@ function SignUpMain({navigation}) {
         if(firstName!='Not provided' && lastName!='Not provided' && email!='Not provided' 
         && dob!='Not provided' && phoneNo!='Not provided' && phoneNo!="")
       {
-      data.setUserData([
-        ...data.userData,
-        {
-           first: firstName,
-           last: lastName,
-           email: email,
-           dob: dob,
-           phoneNum: phoneNo,
-           password: password,
-        },
-     ]);
-      // console.log(data)
+      
+    //     data.setUserData([
+    //     ...data.userData,
+    //     {
+    //        first: firstName,
+    //        last: lastName,
+    //        email: email,
+    //        dob: dob,
+    //        phoneNum: phoneNo,
+    //        password: password,
+    //     },
+    //  ]);
 
-        navigation.navigate(NAVIGATION.LOGIN_HOME)  
+    setAllUsersData([
+      ...data.userData,
+      {
+         first: firstName,
+         last: lastName,
+         email: email,
+         dob: dob,
+         phoneNum: phoneNo,
+         password: password,
+      },
+   ]);
+
+     navigation.navigate(NAVIGATION.LOGIN_HOME)  
 
       }
       else
@@ -62,6 +80,17 @@ function SignUpMain({navigation}) {
     else 
     Alert.alert('Error', 'Passwords NOT entered or do NOT match!');
   } 
+
+
+  const setAllUsersData = async (userData) => {
+    try {
+      await AsyncStorage.setItem("userData", JSON.stringify(userData));
+    }
+    catch(error)
+    {
+      console.log(error);
+    }
+  }
 
   // const onSubmit = async () => {
   //   try{
