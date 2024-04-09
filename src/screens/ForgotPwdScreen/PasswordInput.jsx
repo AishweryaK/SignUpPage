@@ -3,13 +3,12 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity} from "react-native
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FORGOT_TYPE } from "../../utils/constants";
 
-function PasswordComponent({ text, stateProp, isConfirmPassword}) {
+function PasswordComponent({ text, stateProp, validation, isConfirmPassword}) {
     const [showPass, setShowPass] = useState(false);
     const [error, setError]=useState(false);
     const [confirmErr, setConfirmErr]=useState(false);
 
-    const validEmail = (input ) =>  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(input)
-    const validPassword = (input) => /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(input)
+    
 
     const toggleShowPass = () => {
         setShowPass(!showPass)
@@ -27,6 +26,13 @@ function PasswordComponent({ text, stateProp, isConfirmPassword}) {
         }
     }
 
+    // const handleBlur = (input) => {
+    //     if(text==FORGOT_TYPE.EMAIL && input!="")
+    //     {
+    //         stateProp(input);
+    //     }
+    // }
+
 
    return ( 
    <View>
@@ -41,7 +47,8 @@ function PasswordComponent({ text, stateProp, isConfirmPassword}) {
         text==FORGOT_TYPE.CONFIRM? "Confirm Password" : "Enter Email"}
         placeholderTextColor="gray"
         keyboardType={"default"}
-        secureTextEntry={text==FORGOT_TYPE.EMAIL? false : !showPass} 
+        secureTextEntry={text==FORGOT_TYPE.EMAIL? false : !showPass}
+        // onBlur={handleBlur} 
         // value={pass}
          />
        {text!=FORGOT_TYPE.EMAIL && <TouchableOpacity style={styles.showOpacity} 

@@ -11,7 +11,6 @@ function LoginMain ({navigation, route}) {
     const [pass,setPass]=useState("");
     const [emailError, setEmailError] = useState(false);
     const [showPass, setShowPass] = useState(false);
-    const [dataInAsync, setDataInAsync] =useState(null);
     // const [passError, setPassError] = useState(false);
     // const errFlag = useRef(false)
 
@@ -122,14 +121,19 @@ function LoginMain ({navigation, route}) {
   const handleLogin =  async () => {
     const userInfoString = await AsyncStorage.getItem("userInfo");
     const userInfoParsed = JSON.parse(userInfoString);
+    console.log(userInfoString,"STRINGGGGG")
     const currentUser = userInfoParsed.find(user=> user.email===email);
-    console.log(currentUser, "MYBOI");
-    if(!currentUser)
+    console.log(currentUser, "currentUser");
+    if(email=="" || pass=="")
+    {
+      Alert.alert("Invalid Credentials", "Please fill in login details");
+    }
+    else if(!currentUser)
     {
       Alert.alert("Invalid Credentials", "Please Sign Up");
       navigation.navigate(NAVIGATION.SIGNUP);
     }
-    if(currentUser && currentUser.password===pass)
+    else if(email!="" && pass!="" && currentUser && currentUser.password===pass)
     {
       setEmail("");
       setPass("");
@@ -141,6 +145,10 @@ function LoginMain ({navigation, route}) {
     }
   }
 
+  const handleSignUp = ()=> {
+    setEmail("");
+    setPass("");
+    navigation.navigate(NAVIGATION.SIGNUP);}
     
 
     return (
@@ -183,7 +191,7 @@ function LoginMain ({navigation, route}) {
         <View style={styles.input}>
             <TextInput 
             style={styles.inputPassword}
-        onChangeText={(text)=>setPass(text)}
+        onChangeText={setPass}
         placeholder= "Enter Password"
         placeholderTextColor="gray"
         keyboardType={"default"}
@@ -208,7 +216,7 @@ function LoginMain ({navigation, route}) {
           <Text  style={{textAlign:"center", color:"white"}}> Welcome</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.touchable}
-        onPress={()=> navigation.navigate(NAVIGATION.SIGNUP)}>
+        onPress={handleSignUp}>
           <Text  style={styles.signup}> Dont have an account? Sign up! </Text>
         </TouchableOpacity>
         {/* <TouchableOpacity style={styles.button}
