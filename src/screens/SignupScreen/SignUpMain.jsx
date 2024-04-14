@@ -19,9 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 function SignUpMain({navigation}) {
-  // const data=useContext(DataContext)
-  // const {userData, setUserData}=useContext(DataContext)
-// console.log(data)
+  
   const validName = (input ) => /^[A-Za-z]+$/gi.test(input)
   const validPhoneNumber = (input ) =>  /^\d{10}$/.test(input)
   const validEmail = (input ) =>  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(input)
@@ -76,7 +74,7 @@ function SignUpMain({navigation}) {
   }
   setAllUsersData(userInfo);
 
-     navigation.navigate(NAVIGATION.LOGIN_HOME) ; 
+    //  navigation.navigate(NAVIGATION.LOGIN_HOME) ; 
 
       }
       else
@@ -89,17 +87,32 @@ function SignUpMain({navigation}) {
 
   const setAllUsersData = async (userInfo) => {
     try {
-      console.log(userInfo,"STRING");
+      console.log(userInfo,"userInfo");
       const userInfoString = await AsyncStorage.getItem("userInfo");
-      console.log(userInfoString,"STRING@@@@");
+      console.log(userInfoString,"userInfoString");
       const userInfoParsed = userInfoString ? JSON.parse(userInfoString) : [];
+
+      const emailExists = userInfoParsed.some(user => user.email === userInfo.email);
+
+      if(!emailExists) {
       userInfoParsed.push(userInfo);
       await AsyncStorage.setItem("userInfo", JSON.stringify(userInfoParsed));
+      console.log("info added");
+      navigation.navigate(NAVIGATION.LOGIN_HOME) ; 
+      }
+      else {
+        Alert.alert("User already exists", "Please log in");
+        navigation.navigate(NAVIGATION.LOGIN_HOME) ;
+      }
     }
     catch(error)
     {
       console.log(error);
     }
+  }
+
+  const navigateBack = () =>{
+    navigation.navigate(NAVIGATION.LOGIN_HOME);
   }
 
   // const onSubmit = async () => {
@@ -145,6 +158,10 @@ function SignUpMain({navigation}) {
 
         <TouchableOpacity style={signUpStyles.button} onPress={onSubmit}>
           <Text style={signUpStyles.text}>Sign Up</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[signUpStyles.button, { backgroundColor:"gray"}]} onPress={navigateBack}>
+          <Text style={signUpStyles.text}>Go back to login page</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

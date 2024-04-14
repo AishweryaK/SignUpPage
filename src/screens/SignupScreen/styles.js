@@ -4,7 +4,7 @@ export const signUpStyles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#323139',
-      // marginBottom: 35,
+      paddingBottom: 35,
     },
     button: {
       height: 40,
@@ -23,5 +23,6 @@ export const signUpStyles = StyleSheet.create({
     },
     signup: {
       padding : 10,
+      marginBottom:20,
     },
   });

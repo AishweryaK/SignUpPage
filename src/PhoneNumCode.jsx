@@ -24,7 +24,7 @@ const PhoneNumCode = ({changeProp}) => {
 
   return (
     <>
-      {/* <StatusBar barStyle="dark-content" /> */}
+      <StatusBar barStyle="dark-content" />
       <View 
       style={styles.container}
       >
@@ -53,9 +53,11 @@ const PhoneNumCode = ({changeProp}) => {
             withShadow
             autoFocus={false}
             textColor={{ color: "white" }} 
-            placeholderTextColor={{ color: "white" }}
-            codeTextStyle={{ color: "white" }}
-            textInputStyle={{ color: "white" }}
+            codeTextStyle={{ color: "white", fontSize:15 }}
+            textInputStyle={{ color: "white", fontSize:15, paddingVertical:2 }}
+            countryPickerButtonStyle={{paddingVertical:0}}
+            textInputProps={{placeholderTextColor:"gray"}}
+            
           />
 
            {/* {!phoneInput.current?.isValidNumber(value) && (
@@ -92,15 +94,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  
-  // buttonText:{
-  //   color: 'white',
-  //   fontSize: 10,
-  //   borderRadius: 20,
-  // },
-  // redColor: {
-  //   backgroundColor: '#323139'
-  // },
   message: {
     color: "red",
     fontSize: 15,
@@ -112,8 +105,10 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     padding:0,
-    // height:40,
+    height:40,
     borderRadius: 20,
+    minHeight:10,
+    // marginTop:10
     // borderBottomLeftRadius:20,
   },
   bigContainer : {
@@ -121,10 +116,11 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     padding:0,
-    paddingVertical: 9,
+    paddingVertical: 0,
     // height:40,
     borderTopRightRadius: 20,
     borderBottomRightRadius:20,
+    minHeight:10,
   }
 });
 

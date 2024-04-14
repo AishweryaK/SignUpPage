@@ -121,7 +121,7 @@ function LoginMain ({navigation, route}) {
   const handleLogin =  async () => {
     const userInfoString = await AsyncStorage.getItem("userInfo");
     const userInfoParsed = JSON.parse(userInfoString);
-    console.log(userInfoString,"STRINGGGGG")
+    console.log(userInfoString,"userInfoString Login")
     const currentUser = userInfoParsed.find(user=> user.email===email);
     console.log(currentUser, "currentUser");
     if(email=="" || pass=="")
@@ -131,7 +131,7 @@ function LoginMain ({navigation, route}) {
     else if(!currentUser)
     {
       Alert.alert("Invalid Credentials", "Please Sign Up");
-      navigation.navigate(NAVIGATION.SIGNUP);
+      // navigation.navigate(NAVIGATION.SIGNUP);
     }
     else if(email!="" && pass!="" && currentUser && currentUser.password===pass)
     {
@@ -217,7 +217,7 @@ function LoginMain ({navigation, route}) {
         </TouchableOpacity>
         <TouchableOpacity style={styles.touchable}
         onPress={handleSignUp}>
-          <Text  style={styles.signup}> Dont have an account? Sign up! </Text>
+          <Text  style={[styles.signup, {textAlign:"center"} ]}>Dont have an account? Sign up!</Text>
         </TouchableOpacity>
         {/* <TouchableOpacity style={styles.button}
         onPress={()=>navigation.navigate(NAVIGATION.WELCOME, {index:null})}>
@@ -295,7 +295,7 @@ const styles=StyleSheet.create({
       },
       touchable:{
         alignContent:"center",
-        paddingHorizontal:110
+        // textAlign:"center"
       },
       errText: {
         color: "red",
