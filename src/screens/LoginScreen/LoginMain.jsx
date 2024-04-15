@@ -137,6 +137,7 @@ function LoginMain ({navigation, route}) {
     {
       setEmail("");
       setPass("");
+      setShowPass(false);
     navigation.navigate(NAVIGATION.WELCOME, {currentUser : currentUser });
     }
     else

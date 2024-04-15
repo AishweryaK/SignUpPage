@@ -19,6 +19,16 @@ function ForgotPwdMain ({route, navigation}) {
     //     navigation.navigate(NAVIGATION.LOGIN_HOME)
     // }
 
+    // const clearData = async () => {
+    //   try {
+    //     await AsyncStorage.clear();
+    //     console.log('AsyncStorage data cleared successfully.');
+    //   } catch (error) {
+    //     console.error('Error clearing AsyncStorage data:', error);
+    //   }
+    // };
+    
+
     console.log(email, "email")
     console.log(password,"password")
 
@@ -59,10 +69,10 @@ function ForgotPwdMain ({route, navigation}) {
           <Text  style={{textAlign:"center", color:"white"}}> Confirm</Text>
         </TouchableOpacity>
 
-        {/* <TouchableOpacity style={styles.button}
-        onPress={handleChange}>
-          <Text  style={{textAlign:"center", color:"white"}}> Change Password </Text>
-        </TouchableOpacity> */}
+         <TouchableOpacity style={[styles.button,{backgroundColor:"gray", marginTop:40}]}
+        onPress={()=> navigation.navigate(NAVIGATION.LOGIN_HOME)}>
+          <Text  style={{textAlign:"center", color:"white"}}> Go Back </Text>
+        </TouchableOpacity> 
 
 
         </SafeAreaView>
